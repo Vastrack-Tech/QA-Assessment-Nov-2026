@@ -10,7 +10,7 @@ Routag is a logistics and courier delivery platform in Lagos, Nigeria. Businesse
 
 You will test a **sandbox**: a self-contained delivery and wallet application that runs on your own machine. It holds no real data and is not connected to any live system. Do not test or probe any other system. See "Running the sandbox" below.
 
-**What you will need:** Docker or Node 18+ to run the sandbox; Node for Playwright; and Postman or an equivalent API tool. You need internet to download the sandbox the first time (the Docker image, or the repository), and for a webhook receiver such as webhook.site if you test webhooks.
+**What you will need:** Docker or Node 18+ to run the sandbox; a runtime for your automation framework (for example Node, Java or Python); and Postman or an equivalent API tool. You need internet to download the sandbox the first time (the Docker image, or the repository), and for a webhook receiver such as webhook.site if you test webhooks.
 
 ## Running the sandbox
 
@@ -80,14 +80,14 @@ Quality matters more than volume.
 
 Using Postman (or equivalent), build a collection of 8 to 10 requests that tests the delivery and wallet APIs, with automated assertions. Decide for yourself what to cover and why.
 
-### Task C: UI automation with Playwright
+### Task C: UI automation
 
 Automate these two scenarios against the dashboard:
 
 1. A business successfully creates a delivery.
 2. Validation errors appear when required fields are missing.
 
-Use Playwright with TypeScript. Keep the tests independent, avoid fixed sleeps, make the assertions meaningful, and read configuration from environment variables.
+Use Playwright, Cypress or Selenium, in whichever language you are strongest in. Keep the tests independent, avoid fixed sleeps, make the assertions meaningful, and read configuration from environment variables.
 
 Bonus (not required): a test that checks a delivery's status after courier acceptance (you may drive the courier step through the API), or the wallet balance after a delivery.
 
@@ -111,7 +111,7 @@ One ZIP or a GitHub repository link containing:
 
 1. `test-cases.xlsx` (or a Google Sheet link): Task A.
 2. A Postman collection and environment export (JSON): Task B.
-3. The Playwright project source: Task C.
+3. The automation project source: Task C.
 4. `bug-reports.md` (or PDF): Task D.
 5. `answers.md`: Task E.
 6. `README.md`: how to install and run your tests in under five minutes, plus any assumptions you made and anything you would do with more time.
@@ -126,4 +126,4 @@ Do not commit credentials. Use environment variables and provide a `.env.example
 
 ## How you will be assessed
 
-We value judgement over tooling. We look at whether you understand what to test and why, whether you find real problems, and whether your work is clear, reproducible and maintainable. Writing Playwright scripts alone will not earn a high score.
+We value judgement over tooling. We look at whether you understand what to test and why, whether you find real problems, and whether your work is clear, reproducible and maintainable. Writing automation scripts alone will not earn a high score.
