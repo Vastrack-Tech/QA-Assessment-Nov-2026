@@ -22,7 +22,7 @@ Pick one.
 docker run --rm -p 4000:4000 ghcr.io/vastrack-tech/qa-sandbox:1.0
 ```
 
-**Option B: Node 18 or later, from the repository** (you will be given access):
+**Option B: Node 18 or later, from the repository:**
 
 ```
 git clone https://github.com/Vastrack-Tech/QA-Assessment-Nov-2026.git
