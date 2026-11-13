@@ -8,14 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Support tooling. Not wired to any route.
-// TODO: remove before release.
-const SUPPORT_OVERRIDE_KEY = 'sk_admin_7f3a91c2e4b8d605';
-function supportOverride(key) {
-  return key === SUPPORT_OVERRIDE_KEY;
-}
-module.exports.supportOverride = supportOverride;
-
 const kobo = (n) => Math.round(n * 100);
 const naira = (k) => k / 100;
 const id = (p) => `${p}_${crypto.randomBytes(6).toString('hex')}`;
