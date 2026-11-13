@@ -127,7 +127,7 @@ Do not commit credentials. Use environment variables and provide a `.env.example
 
 - You may use documentation, search and AI tools. If you use AI, say so in the README of your submission and say what you checked yourself. You will be asked to explain and defend any part of your submission in the follow-up interview.
 - If something in the brief is unclear, state your assumption and carry on. Questions to the hiring team are allowed, and the quality of your questions is noted.
-- Test only the sandbox you were given. The source is in the repository only so you can run it without Docker. Do not read it to look for bugs. We want to see how you test it as a user and API consumer, and you will be asked in the interview how you found each issue.
+- Test only the sandbox you were given. The source is in the repository so you can run it without Docker.
 
 ## How you will be assessed
 
