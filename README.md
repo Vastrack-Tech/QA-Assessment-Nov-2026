@@ -2,7 +2,7 @@
 
 **Role:** QA Engineer (mid-level, manual + automation)  
 **Time allowed:** about 3 hours of actual work, spread over the weekend as suits you. Three hours is a guideline, not a reason to rush or compromise quality.  
-**Deadline:** Monday 16 November 2026, 5:00 PM WAT.
+**Deadline:** Monday 16 November 2026, 6:00 PM WAT.
 
 ## About the product
 
