@@ -1,0 +1,5 @@
+services:
+  sandbox:
+    image: ghcr.io/vastrack-tech/qa-sandbox:1.0
+    ports:
+      - "4000:4000"
