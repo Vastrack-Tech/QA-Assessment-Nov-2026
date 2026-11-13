@@ -22,7 +22,7 @@ Pick one.
 docker run --rm -p 4000:4000 ghcr.io/vastrack-tech/qa-sandbox:1.0
 ```
 
-**Option B: Node 18 or later, from the repository:**
+**Option B: Node 18 or later, from the repository.** You will receive an email invitation to the repository. Accept it with a free GitHub account, then either clone it (GitHub will ask you to sign in) or use Code, then Download ZIP on the repository page:
 
 ```
 git clone https://github.com/Vastrack-Tech/QA-Assessment-Nov-2026.git
