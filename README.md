@@ -107,7 +107,7 @@ Answer in your own words, at most 150 words each:
 
 ## What to submit
 
-One ZIP or a GitHub repository link containing:
+Submit the following, in a ZIP or in a GitHub repository:
 
 1. `test-cases.xlsx` (or a Google Sheet link): Task A.
 2. A Postman collection and environment export (JSON): Task B.
@@ -118,9 +118,14 @@ One ZIP or a GitHub repository link containing:
 
 Do not commit credentials. Use environment variables and provide a `.env.example`.
 
+**How to submit.** Submit before Monday 16 November 2026, 6:00 PM WAT. We will confirm receipt.
+
+- **If you prefer GitHub:** put the items in your own repository and send us the link. If it is private, add the GitHub user `OWL-vasttrack` as a collaborator.
+- **Otherwise:** reply to the email you received this assessment in, with a ZIP attached. Keep it under about 20 MB and leave out `node_modules`.
+
 ## Rules
 
-- You may use documentation, search and AI tools. If you use AI, say so in the README and say what you checked yourself. You will be asked to explain and defend any part of your submission in the follow-up interview.
+- You may use documentation, search and AI tools. If you use AI, say so in the README of your submission and say what you checked yourself. You will be asked to explain and defend any part of your submission in the follow-up interview.
 - If something in the brief is unclear, state your assumption and carry on. Questions to the hiring team are allowed, and the quality of your questions is noted.
 - Test only the sandbox you were given. The source is in the repository only so you can run it without Docker. Do not read it to look for bugs. We want to see how you test it as a user and API consumer, and you will be asked in the interview how you found each issue.
 
