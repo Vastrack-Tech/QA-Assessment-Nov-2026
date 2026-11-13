@@ -1,0 +1,9 @@
+{
+  "name": "routag-qa-sandbox",
+  "version": "1.0.0",
+  "description": "Isolated delivery and wallet sandbox for the Vastrack QA assessment",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": { "express": "4.21.2" }
+}

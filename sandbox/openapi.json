@@ -1,0 +1,714 @@
+{
+ "openapi": "3.0.3",
+ "info": {
+  "title": "Delivery Sandbox API",
+  "version": "1.0.0",
+  "description": "Log in as a business (business1@sandbox.test / Password123!) or a courier (courier1@sandbox.test / Password123!) to get a bearer token. Business API keys also work as bearer tokens. Fee = 1500 + 200 x weight_kg (NGN). The courier is paid 80% of the fee."
+ },
+ "servers": [
+  {
+   "url": "/"
+  }
+ ],
+ "paths": {
+  "/api/v1/auth/login": {
+   "post": {
+    "summary": "Log in, returns a bearer token",
+    "tags": [
+     "Auth"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "email": {
+          "type": "string"
+         },
+         "password": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me": {
+   "get": {
+    "summary": "Current user",
+    "tags": [
+     "Auth"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/api-keys": {
+   "get": {
+    "summary": "List API keys",
+    "tags": [
+     "API keys"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   },
+   "post": {
+    "summary": "Create an API key",
+    "tags": [
+     "API keys"
+    ],
+    "responses": {
+     "201": {
+      "description": "201"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/api-keys/{id}": {
+   "delete": {
+    "summary": "Revoke an API key",
+    "tags": [
+     "API keys"
+    ],
+    "responses": {
+     "204": {
+      "description": "204"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/wallet": {
+   "get": {
+    "summary": "Wallet balance and held amount",
+    "tags": [
+     "Wallet"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/wallet/top-up": {
+   "post": {
+    "summary": "Top up the wallet",
+    "tags": [
+     "Wallet"
+    ],
+    "responses": {
+     "201": {
+      "description": "201"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "amount": {
+          "type": "number"
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/transactions": {
+   "get": {
+    "summary": "Wallet transactions",
+    "tags": [
+     "Wallet"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/webhook": {
+   "put": {
+    "summary": "Set webhook URL",
+    "tags": [
+     "Webhooks"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "url": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/webhook/events": {
+   "get": {
+    "summary": "List webhook events sent",
+    "tags": [
+     "Webhooks"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/deliveries/quote": {
+   "post": {
+    "summary": "Get a delivery quote",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "201": {
+      "description": "201"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "required": [
+         "pickup",
+         "dropoff",
+         "package"
+        ],
+        "properties": {
+         "pickup": {
+          "$ref": "#/components/schemas/Party"
+         },
+         "dropoff": {
+          "$ref": "#/components/schemas/Party"
+         },
+         "package": {
+          "type": "object",
+          "required": [
+           "description",
+           "weight_kg"
+          ],
+          "properties": {
+           "description": {
+            "type": "string"
+           },
+           "weight_kg": {
+            "type": "number"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/deliveries": {
+   "get": {
+    "summary": "List your deliveries",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   },
+   "post": {
+    "summary": "Create a draft delivery (optional Idempotency-Key header)",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "201": {
+      "description": "201"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "allOf": [
+         {
+          "type": "object",
+          "required": [
+           "pickup",
+           "dropoff",
+           "package"
+          ],
+          "properties": {
+           "pickup": {
+            "$ref": "#/components/schemas/Party"
+           },
+           "dropoff": {
+            "$ref": "#/components/schemas/Party"
+           },
+           "package": {
+            "type": "object",
+            "required": [
+             "description",
+             "weight_kg"
+            ],
+            "properties": {
+             "description": {
+              "type": "string"
+             },
+             "weight_kg": {
+              "type": "number"
+             }
+            }
+           }
+          }
+         },
+         {
+          "type": "object",
+          "properties": {
+           "quote_id": {
+            "type": "string"
+           }
+          }
+         }
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/deliveries/{id}": {
+   "get": {
+    "summary": "Get a delivery",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/deliveries/{id}/code": {
+   "get": {
+    "summary": "Get the delivery code the receiver gives the courier",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/deliveries/{id}/tracking": {
+   "get": {
+    "summary": "Status history",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/deliveries/{id}/publish": {
+   "post": {
+    "summary": "Publish a draft delivery to couriers",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/deliveries/{id}/cancel": {
+   "post": {
+    "summary": "Cancel a delivery (business)",
+    "tags": [
+     "Deliveries"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/courier/deliveries": {
+   "get": {
+    "summary": "Courier: pending and own deliveries",
+    "tags": [
+     "Courier"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ]
+   }
+  },
+  "/api/v1/courier/deliveries/{id}/accept": {
+   "post": {
+    "summary": "Courier accepts; fee is held from the business wallet",
+    "tags": [
+     "Courier"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/courier/deliveries/{id}/pickup": {
+   "post": {
+    "summary": "Courier picks up",
+    "tags": [
+     "Courier"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/courier/deliveries/{id}/deliver": {
+   "post": {
+    "summary": "Courier delivers with the code",
+    "tags": [
+     "Courier"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "code": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/courier/deliveries/{id}/cancel": {
+   "post": {
+    "summary": "Courier cancels an assigned delivery",
+    "tags": [
+     "Courier"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    },
+    "security": [
+     {
+      "bearer": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/v1/reset": {
+   "post": {
+    "summary": "Reset all sandbox data to the seed state",
+    "tags": [
+     "Sandbox"
+    ],
+    "responses": {
+     "200": {
+      "description": "200"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "securitySchemes": {
+   "bearer": {
+    "type": "http",
+    "scheme": "bearer"
+   }
+  },
+  "schemas": {
+   "Party": {
+    "type": "object",
+    "required": [
+     "name",
+     "phone",
+     "address"
+    ],
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "phone": {
+      "type": "string",
+      "example": "08031234567"
+     },
+     "address": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

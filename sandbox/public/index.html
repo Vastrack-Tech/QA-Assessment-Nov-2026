@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delivery Sandbox</title>
+<style>
+  :root { --o:#ff6400; --b:#111; --g:#f4f4f4; --r:#c0262d; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; margin: 0; background: #fff; color: var(--b); }
+  header { display:flex; justify-content:space-between; align-items:center; padding:12px 24px; border-bottom:1px solid #ddd; }
+  main { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+  h1,h2 { margin: 0 0 12px; }
+  .card { border:1px solid #ddd; border-radius:10px; padding:16px; margin-bottom:16px; }
+  label { display:block; font-size:13px; margin:8px 0 2px; }
+  input, textarea { width:100%; padding:8px; border:1px solid #bbb; border-radius:6px; font:inherit; }
+  button { background:var(--o); color:#fff; border:0; border-radius:6px; padding:8px 14px; cursor:pointer; font:inherit; }
+  button.secondary { background: var(--b); }
+  button:disabled { opacity:.5; cursor:not-allowed; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .err { color: var(--r); font-size:13px; margin-top:4px; }
+  .ok { color:#127a3b; font-size:13px; }
+  table { width:100%; border-collapse:collapse; }
+  th,td { text-align:left; padding:8px; border-bottom:1px solid #eee; font-size:14px; }
+  .badge { padding:2px 8px; border-radius:10px; background:var(--g); font-size:12px; }
+  .hidden { display:none; }
+  @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<header>
+  <strong>Delivery Sandbox</strong>
+  <div id="who"></div>
+</header>
+<main>
+  <section id="login" class="card">
+    <h2>Log in</h2>
+    <form id="login-form" novalidate>
+      <label for="email">Email</label><input id="email" data-testid="login-email" type="email">
+      <label for="password">Password</label><input id="password" data-testid="login-password" type="password">
+      <div class="err" data-testid="login-error" id="login-error"></div>
+      <p><button type="submit" data-testid="login-submit">Log in</button></p>
+    </form>
+  </section>
+
+  <div id="app" class="hidden">
+    <section class="card">
+      <h2>Wallet</h2>
+      <p>Balance: <strong data-testid="wallet-balance" id="balance">-</strong> &nbsp; Held: <span data-testid="wallet-held" id="held">-</span></p>
+      <form id="topup-form" novalidate>
+        <label for="topup">Top up amount (NGN, minimum 100)</label>
+        <input id="topup" data-testid="topup-amount" inputmode="decimal">
+        <div class="err" data-testid="topup-error" id="topup-error"></div>
+        <p><button type="submit" data-testid="topup-submit">Top up</button></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Create delivery</h2>
+      <form id="delivery-form" novalidate>
+        <div class="grid">
+          <div>
+            <strong>Pickup</strong>
+            <label for="p-name">Name</label><input id="p-name" data-testid="pickup-name">
+            <div class="err" data-testid="pickup-name-error" id="p-name-err"></div>
+            <label for="p-phone">Phone</label><input id="p-phone" data-testid="pickup-phone">
+            <div class="err" data-testid="pickup-phone-error" id="p-phone-err"></div>
+            <label for="p-addr">Address</label><input id="p-addr" data-testid="pickup-address">
+            <div class="err" data-testid="pickup-address-error" id="p-addr-err"></div>
+          </div>
+          <div>
+            <strong>Drop-off</strong>
+            <label for="d-name">Name</label><input id="d-name" data-testid="dropoff-name">
+            <div class="err" data-testid="dropoff-name-error" id="d-name-err"></div>
+            <label for="d-phone">Phone</label><input id="d-phone" data-testid="dropoff-phone">
+            <div class="err" data-testid="dropoff-phone-error" id="d-phone-err"></div>
+            <label for="d-addr">Address</label><input id="d-addr" data-testid="dropoff-address">
+            <div class="err" data-testid="dropoff-address-error" id="d-addr-err"></div>
+          </div>
+        </div>
+        <div class="grid">
+          <div><label for="pkg-desc">Package description</label><input id="pkg-desc" data-testid="package-description">
+            <div class="err" data-testid="package-description-error" id="pkg-desc-err"></div></div>
+          <div><label for="pkg-w">Weight (kg)</label><input id="pkg-w" data-testid="package-weight" inputmode="decimal">
+            <div class="err" data-testid="package-weight-error" id="pkg-w-err"></div></div>
+        </div>
+        <div class="err" data-testid="delivery-error" id="delivery-error"></div>
+        <div class="ok" data-testid="delivery-success" id="delivery-success"></div>
+        <p><button type="submit" data-testid="delivery-submit">Create and publish delivery</button></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Deliveries</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Drop-off</th><th>Fee</th><th>Status</th><th></th></tr></thead>
+        <tbody id="rows" data-testid="delivery-rows"></tbody>
+      </table>
+    </section>
+  </div>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -8,9 +8,53 @@
 
 Routag is a logistics and courier delivery platform in Lagos, Nigeria. Businesses (online stores, restaurants, pharmacies) sign up, fund a prepaid Naira wallet and create deliveries through a web dashboard or API. Couriers accept deliveries on a mobile app, pick up the package and deliver it. Money moves through the wallet: the business is charged, the courier is credited, and a cancelled delivery is refunded.
 
-You will test a **sandbox**: a self-contained delivery and wallet application that runs on your own machine. It starts with one command (`docker compose up`, see [SANDBOX.md](SANDBOX.md)), which also covers the test accounts and API docs. It holds no real data and is not connected to any live system. Do not test or probe any other system.
+You will test a **sandbox**: a self-contained delivery and wallet application that runs on your own machine. It holds no real data and is not connected to any live system. Do not test or probe any other system. See "Running the sandbox" below.
 
-**What you will need:** Docker to run the sandbox; Node for Playwright; and Postman or an equivalent API tool. The sandbox runs locally. You need internet to download it the first time, and for a webhook receiver such as webhook.site if you test webhooks.
+**What you will need:** Docker or Node 18+ to run the sandbox; Node for Playwright; and Postman or an equivalent API tool. You need internet to download the sandbox the first time (the Docker image, or the repository), and for a webhook receiver such as webhook.site if you test webhooks.
+
+## Running the sandbox
+
+Pick one.
+
+**Option A: Docker.**
+
+```
+docker run --rm -p 4000:4000 ghcr.io/vastrack-tech/qa-sandbox:1.0
+```
+
+**Option B: Node 18 or later, from the repository** (you will be given access):
+
+```
+git clone https://github.com/Vastrack-Tech/QA-Assessment-Nov-2026.git
+cd QA-Assessment-Nov-2026/sandbox
+npm install
+npm start
+```
+
+Press Ctrl+C to stop it. Everything is held in memory, so stopping and restarting gives you clean data. You can also reset at any time with `POST /api/v1/reset`.
+
+Then open:
+
+- Dashboard: http://localhost:4000
+- API docs (Swagger): http://localhost:4000/docs
+- OpenAPI file for Postman import: http://localhost:4000/openapi.json
+
+Test accounts (all passwords are `Password123!`):
+
+| Role | Email |
+| --- | --- |
+| Business 1 (wallet NGN 50,000) | business1@sandbox.test |
+| Business 2 (wallet NGN 50,000) | business2@sandbox.test |
+| Courier 1 | courier1@sandbox.test |
+| Courier 2 | courier2@sandbox.test |
+
+Log in with `POST /api/v1/auth/login` to get a bearer token. Business API keys also work as bearer tokens (`GET /api/v1/api-keys`).
+
+Notes:
+
+- The dashboard is for businesses. Courier actions (accept, pick up, deliver, cancel) are available through the API only.
+- Fee = 1500 + 200 x weight in kg (NGN). The courier is paid 80% of the fee.
+- Webhooks are sent to the URL you set with `PUT /api/v1/webhook`.
 
 ## The journey you are testing
 
@@ -78,7 +122,7 @@ Do not commit credentials. Use environment variables and provide a `.env.example
 
 - You may use documentation, search and AI tools. If you use AI, say so in the README and say what you checked yourself. You will be asked to explain and defend any part of your submission in the follow-up interview.
 - If something in the brief is unclear, state your assumption and carry on. Questions to the hiring team are allowed, and the quality of your questions is noted.
-- Test only the sandbox you were given. Do not try to inspect or reverse-engineer its source code. We want to see how you test it as a user and API consumer.
+- Test only the sandbox you were given. The source is in the repository only so you can run it without Docker. Do not read it to look for bugs. We want to see how you test it as a user and API consumer, and you will be asked in the interview how you found each issue.
 
 ## How you will be assessed
 
